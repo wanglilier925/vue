@@ -1,0 +1,26 @@
+<div id="root">
+    <input type="text" v-model="firstname">
+    <input type="text" v-model="lastname">
+
+    <h1>全名： {{ firstname }}{{ lastname }}</h1>
+    <h1>全名： {{ firstname + lastname }}</h1>   
+    <h1>计算属性全名： {{fullnameCp}}</h1>
+
+</div>
+<script src = "https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+const vm = new Vue({
+    el: "#root",
+    data: {
+        firstname: '',
+        lastname: '',
+    },
+    computed: {
+        fullnameCp() {
+            // 只要计算属性中写的【任意一个】模型数据改变了就会重新触发/重新缓存
+            console.log('computed');
+            return this.firstname + this.lastname
+        }
+    }
+})
+</script>

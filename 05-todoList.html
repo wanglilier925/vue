@@ -1,0 +1,58 @@
+<div id="app">
+    <h1>todolist</h1>
+
+    <input type="text">
+    <button @click="addFn">Add</button>
+
+    <ul>
+        <!-- <li v-for="item in todos"> -->
+        <li v-for="(item,i) in todos">
+            {{item.id}} : {{item.content}}
+            <button @click="delFn(i)">Del</button>
+        </li>
+    </ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<script>
+// 1-准备
+// 2-必写：列表循环
+// 3-必写：添加数据（注：今天还是用DOM操作、明天换新思想减少DOM操作）
+// 4-必写：删除数据
+// 5-选写：数据持久化入H5存储
+const vm = new Vue({
+    el: '#app',
+    data:{
+        todos: JSON.parse(localStorage.getItem('todos')) || [
+            {id:1, content: 'climbing'},
+            {id:2, content: 'swimming'},
+            {id:3, content: 'table tennis'},
+            {id:4, content: 'rnning'},
+        ]
+    },
+    methods:{
+        delFn(i) 
+        {
+            // 作用：从数组中删除一条数据
+            // 语法：数组.splice(索引, 个数)
+
+            this.todos.splice(i, 1)
+            localStorage.setItem('todos', JSON.stringify(this.todos))
+        },
+        addFn() {
+            // 1 获取数据  
+            // TODO: 待优化 vue减少DOM操作
+            let content = document.querySelector('input').value
+            // 2 保存到模型中  vm监控到变化会自动同步到视图
+            this.todos.push({
+                id: this.todos.length+1,
+                // content: content
+                content,
+            })
+            localStorage.setItem('todos', JSON.stringify(this.todos))
+
+            // localStorage.setItem('todos', JSON.stringify(this.todos))
+        }
+    },
+})
+</script>

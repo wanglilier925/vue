@@ -1,0 +1,35 @@
+<style>
+    * {padding:0;margin:0}
+    html,body,#root {height: 100%;}
+    #root {display: flex;}
+    nav {width: 200px;height: 100%;background-color: #293444; transition: all .5s;}
+    main {flex:1;background-color: #ccc;}
+    </style>
+    <div id="root">
+        <!-- <nav :style="styleObj"></nav> -->
+        <!-- <nav :style="{width: '200px'}"></nav> -->
+        <!-- <nav :style="{width: navWidth}"></nav> -->
+        <nav :style="{width: navWidth+'px'}"></nav>
+        <main>
+            <button @click="changeNavFn">切换🐧</button>
+            <!-- <i class="iconfont 标识"></i> -->
+            <!-- <i :class="['iconfont', '标识']"></i> -->
+            <!-- <i :class="{iconfont: true, '左': true, '右': false}"></i> -->
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+    const vm = new Vue({
+        el: "#root",
+        data: {
+            // styleObj: {width: '200px'},
+            // navWidth: '200px'
+            navWidth: 200
+        },
+        methods: {
+            changeNavFn() {
+                this.navWidth = this.navWidth===200 ? 10: 200
+            }
+        }
+    })
+    </script>

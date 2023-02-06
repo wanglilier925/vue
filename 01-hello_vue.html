@@ -1,0 +1,24 @@
+<!-- 
+    v, 通过指定语法来获取 听一管理的模型数据
+    语法： {{}}
+-->
+
+<!DOCTYPE html>
+<html>
+<div id ="app">
+    <h1> {{ msg }}</h1>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<script>
+    // 引入vue库， 就可以使用vue构造函数
+    // 基于vue构造函数创建对象，需要传递一个实参
+    const vm = new Vue({
+        //声明监控范围
+        el: "#app", // application 应用
+        //声明模型数据
+        data:{
+            msg: 'hello vue @ 🦑',
+        }
+    })
+</script>
+</html>

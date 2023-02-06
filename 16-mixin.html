@@ -1,0 +1,45 @@
+<div id="app1">
+    <button @click="sayFn">点击弹出你的名字</button>
+</div>
+
+<hr>
+
+<div id="app2">
+    <button @click="sayFn">点击弹出你的名字</button>
+</div>
+
+<script src = "https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+const common1 = {
+    data() {
+        return {
+            uname: '武松'
+        }
+    },
+    methods: {
+        sayFn() {
+            alert(this.uname)
+        }
+    }
+}
+    
+// 步骤1：创建两个Vue对象分别监控app1和app2
+// 步骤2：app1显示uname=神龙教主1和age=1模型数据 & 点击方法弹出模型中的姓名
+// 步骤3：app2显示uname=神龙教主2和age=2模型数据 & 点击方法弹出模型中的姓名
+const vm1 = new Vue({
+    mixins: [common1],
+    el: "#app1",
+    data: {
+        age: 1,
+    },
+})
+
+const vm2 = new Vue({
+    mixins: [common1],
+    el: "#app2",
+    data: {
+        uname: '神龙教主2',
+        age: 2,
+    },
+})
+</script>

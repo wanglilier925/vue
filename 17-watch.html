@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title></title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src = "https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>shopping carts</h1>
+    <!-- input:checkbox  click input v-model change -->
+    <!-- <input type="checkbox" v-model="status" @change="chooseCartsFn" /> 全选&全不选 -->
+    <input type="checkbox" v-model="status" /> 全选&全不选
+    <hr />
+    <ul>
+        <!-- <li v-for="item in carts"> -->
+        <li v-for="(item, i) in carts">
+            <input type="checkbox" :value="item" v-model="chooseCarts"  @change="chooseFn" /> &nbsp;
+            标题：{{ item.title }},  
+            价格：{{ item.price }},
+            数量：{{ item.number }}&nbsp;
+            <!-- 
+                <input type="text" size="1"  :value="item.number" /> 
+                v-model
+                1 将m数据取出来放到v  value
+                2 v数据变化自动同步到m
+
+                input:text click v-model  input  change
+            -->
+            <input type="text" size="1"  v-model="item.number" @input="filterCartNumberFn(i)"/>
+            <input type="button" value="**" @click="addCartNumberFn(i)" />
+        </li>
+    </ul>
+    <hr /><hr />
+    <h2>勾选商品</h2>
+    {{chooseCarts}}
+    <h2>总数量：{{totalNum}}，总价： {{totalPrice}}</h2>
+</div>
+<script>
+// 准 备：复制下述【初始化代码】完成需求
+
+// 需求1：遍历显示carts模型数据（注：遍历li标签）
+// 需求2：购买数量input框改变同步模型（注：双向绑定即可）
+// 需求3：调用filterCartNumberFn方法过滤数据，仅支持数字（留心：keyup、input）
+// 需求4：单击商品添加按钮，调用addCartNumberFn方法，模型carts对应数据 + 1  
+// 需求5：单击商品复选框，同步数据到chooseCarts模型中（注：数组
+// 需求6：全选 & 全不选、封装chooseCartsFn方法切换状态
+// 需求7：勾选统计，显示总价格总数量（封装totalFn方法，遍历计算已勾选商品总数量和价格分别保存到模型		totalNum & totalPrice）
+const vm = new Vue({
+    el: '#app',
+    data: {
+        //购物车商品 
+        carts: [
+            {title:'商品1', price: 1, number: 1},
+            {title:'商品2', price: 2, number: 1},
+            {title:'商品3', price: 3, number: 1}
+        ],
+        chooseCarts: [],
+
+        status: false,
+
+        totalNum: 0,
+        totalPrice: 0
+    },
+    watch: {
+        status(newdata, olddata) {
+            // this.chooseCarts = this.status ? this.carts : []
+            this.chooseCarts = newdata ? this.carts : []
+            this.totalFn()
+        }
+    },
+    //声明普通方法
+    methods: {
+        // 勾选点击
+        chooseFn() {
+            this.totalFn()
+
+            this.status = this.chooseCarts.length === 3
+        },
+        // 统计
+        totalFn() {
+            // 1 定义totalNum、totalPrice变量
+            let totalNum = 0
+            let totalPrice = 0
+            // 2 遍历勾选商品  - 》 累计
+            this.chooseCarts.forEach(item => {
+                let num = parseInt(item.number)
+                let price = parseFloat(item.price)
+
+                if (isNaN(num)) num = 0
+
+                totalNum += num
+                totalPrice += num * (price*100)
+            })
+            // 3 结果保存到模型中
+            this.totalNum = totalNum
+            this.totalPrice = totalPrice/100
+        },
+        // 全选&全不选
+        chooseCartsFn() {
+            // if (this.status) {
+            //     this.chooseCarts = this.carts
+            // } else {
+            //     this.chooseCarts = []
+            // }
+
+            this.chooseCarts = this.status ? this.carts : []
+
+            this.totalFn()
+        },
+        // 数量+1
+        addCartNumberFn(i) {
+            this.carts[i].number++
+
+            this.totalFn()
+        },
+        // 数量update
+        filterCartNumberFn(i) {
+            // 1 拿数据
+            let num = this.carts[i].number
+            // 2 过滤
+            // 语法：字符串.replace(旧数据, 新数据)
+            num = String(num).replace(/\D/g, '')  
+            // 3 重置：页面显示最新数据
+            this.carts[i].number = num
+
+            this.totalFn()
+        }
+    }
+})
+</script>
+</body>
+</html>

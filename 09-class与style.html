@@ -1,0 +1,17 @@
+
+<body>
+<div id="root">
+    <h1 :style="{fontSize: fontSize+'px'}">hello, how are you</h1>
+    <button @click="fontSize++">+1</button>
+    <button @click="fontSize--">-1</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+const vm = new Vue({
+    el: '#root',
+    data: {
+        fontSize: 20,
+     }
+})
+</script>

@@ -1,0 +1,43 @@
+<div id="app">
+    <h1>v-for="item in data"</h1>
+    <ul>
+        <li v-for="item in goods"> {{item.id}}{{item.title}}</li>
+    </ul>
+
+<h1>v-for="(item,i) in data中的键"</h1>
+<ul>
+    <li v-for="( item,i) in goods">
+        {{i}} {{item.id}} {{ item.title}}
+    </li>
+</ul>
+
+<h1>遍历数字</h1>
+<ul>
+    <li v-for="item in 3">
+        {{item}}
+    </li>
+</ul>
+
+<h1>遍历对象</h1>
+<ul>
+    <li v-for="(item, key) in 4">
+        {{key}} - {{item}}
+    </li>
+</ul>
+</div>
+
+<script src = "https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<script>
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            goods:[
+            {id: 1, title:'a', price: 12},
+            {id: 2, title:'b', price: 13},
+            {id: 3, title:'c', price: 14},
+            {id: 4, title:'d', price: 15}
+        ]
+
+        }
+    })
+</script>

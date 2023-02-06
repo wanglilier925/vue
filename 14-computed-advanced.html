@@ -1,0 +1,39 @@
+<div id="root">
+    <h1>全名：{{ fullnameCp }}</h1>
+
+    <input type="text" v-model="firstname">
+    <input type="text" v-model="lastname">
+
+    <hr>
+
+    <button @click="  fullnameCp = 'wang,lili'  ">改名：灵活的胖子</button>
+    <button @click="  fullnameCp = 'jing,li'   ">改名：黄鳝杀手</button>
+    <button @click="  fullnameCp = 'li,alfred'      ">改名：幸福奔小康 土豪社会 造土豪</button>
+</div>
+<script src = "https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+const vm = new Vue({
+    el: "#root",
+    data: {
+        firstname: '',
+        lastname: '',
+    },
+    computed: {
+        fullnameCp: {
+            // 问1：🤔什么时候触发get❓
+            // 答1：当页面【首次】调用的时候，还有【后期】相关模型改变时触发
+            get() {
+                return this.firstname + this.lastname
+            },
+            // 问2：🤔什么时候触发set❓
+            // 答2：当【计算属性名】被更新时候才会触发， 也就是 fullnameCp = 数据   data就是数据
+            // 问3：🤔改计算属性名的意义 目的 价值
+            // 答3：可以理解为【肤浅】快捷操作，【格局】减少视图操作，视图只负责展示数据  
+            set(data) {
+                this.firstname = data.split(',').shift()
+                this.lastname = data.split(',').pop()
+            }
+        }
+    }
+})
+</script>

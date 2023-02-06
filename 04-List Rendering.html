@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<style>
+    .son {
+        width: 100px;
+        height: 100px;
+        background:red;
+    }
+    .father {
+        width: 200px;
+        height: 200px;
+        background: green;
+    }
+    .grandfather {
+        width: 300px;
+        height: 300px;
+        background: yellow;
+    }
+    </style>
+<div id="app">
+    <h1>键盘修饰符</h1>
+    <input 
+        type="text"
+        @keyup.enter="saydataFn('按回车键盘')"
+        @keyup.space="saydataFn('按空格键盘')"
+        @keyup.delete="saydataFn('按删除键盘')"
+        @keyup.up="saydataFn('按👆键盘')"
+        >
+    <h1>系统修饰符：也就是组合键</h1>
+    <pre>ctrl/shift/alt键不松 + 然后按下其他键盘</pre>
+    <input 
+        type="text"
+        @keyup.ctrl.enter="sayFn('按ctrl+回车键盘')"
+    >
+
+
+    <hr>
+    <h1 v-if="cartNum">购物车{{cartNum}}</h1>
+    <h1 v-else>购物车</h1>
+    <hr>
+    <hr>
+    <h1>购物车{{ cartNum || ''}}</h1>
+    <hr>
+    <h1 v-if="score>=90">excerllent</h1>
+    <h1 v-else-if="score>=60">good</h1>
+    <h1 v-else> not good </h1>
+    <hr>
+    <hr>
+    <h1>v-if</h1>
+    <div>
+        <h v-if="status"> hello, nice to meet you</h>
+        <h v-else>byebye</h>
+
+    </div>  
+    <hr>
+    <h1>v-show</h1>
+    <div v-show="status">
+        hi,how are you!
+    </div>
+    <hr>
+    <botton @click="clickFn">click me</botton>
+    <hr>
+    <h1>{{num}}</h1>
+    <botton  @click="addFn"> + </botton>
+    <botton  @click="delFn"> - </botton>
+    <hr>
+    <hr>
+    <button @click="num++">add directly</button>
+    <button @click="num--">reduce directly</button>
+    <hr>
+    <hr>
+    <button @click.once="sayDataFn('dj抓个彼')">点击哥哥摇起来💊</button>
+    <button @click.once="sayDataFn('dj姐姐妹')">点击💊</button>
+   <h1>跳过除非点自己 self</h1>
+
+    <div class="grandfather" @click="sayDataFn('grandfather')">
+        <div class="father" @click.self="sayDataFn('father')">
+            <div class="son" @click="sayDataFn('son')"></div>
+        </div>
+    </div> 
+</div>
+    
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data :{
+            cartNum:0,
+            score:40,
+            status:false,
+            num:666,
+        },
+        methods: {
+            delFn(){
+                this.num--;
+            },
+            addFn(){
+                this.num++;
+            },
+            clickFn(){
+                alert("I am very hapy, good weather!")
+            },
+            sayDataFn(who){
+                console.log(who);
+            }
+        },
+    })
+</script> 

@@ -1,0 +1,25 @@
+<div id="root">
+    <h1>单向绑定</h1>
+    {{msg}}
+    <br>
+    <a :href="url">TV SHOW</a>
+    <h1>双向绑定：仅支持select/input/textarea</h1>
+    <input type="test" v-model="num">
+    <!-- 
+        作用1：将m数据拿过来放到input value属性中 
+        作用2：会给input绑定值改变事件  视图变了自动同步到M
+     -->
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+const vm = new Vue({
+  el:"#root",
+  data:{
+    msg:'hi, nice to meet you, do you like to watch TV?',
+    url:'https://www.youtube.com/',
+    num:69,
+  }
+}) 
+</script>

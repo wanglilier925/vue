@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>shopping card</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>Shooping Cart</h1>
+    <input type="checkbox" v-model="status" @change="chooseCartsFn" /> chooseALL OR chooseNone
+    <hr/>
+    <ul>
+        <li v-for="(item, i) in carts">          
+            <input type="checkbox":value="item" v-model="chooseCarts" @change="chooseFn"  /> &nbsp;
+                name:{{item.title}},
+                price:{{item.price}},
+                quality:{{item.number}}&nbsp;
+                <input type="text" size="2" v-model="item.number" @input="filterCartNumberFn(i)"/>
+                <input type="button" value="+" @click="addCartNumberFn(i)" />
+                
+        </li>
+    </ul>
+    <hr /><hr />
+    <h2>choose Products</h2>
+    {{chooseCarts}}
+    <h2>Total Quality: {{totalNum}},   Total Price:{{totalPrice}}</h2>        
+</div>
+<script>
+// 准 备：复制下述【初始化代码】完成需求
+
+// 需求1：遍历显示carts模型数据（注：遍历li标签）
+// 需求2：购买数量input框改变同步模型（注：双向绑定即可）
+// 需求3：调用filterCartNumberFn方法过滤数据，仅支持数字（留心：keyup、input）
+// 需求4：单击商品添加按钮，调用addCartNumberFn方法，模型carts对应数据 + 1
+// 需求5：单击商品复选框，同步数据到chooseCarts模型中（注：数组
+// 需求6：全选 & 全不选、封装chooseCartsFn方法切换状态
+// 需求7：勾选统计，显示总价格总数量（封装totalFn方法，遍历计算已勾选商品总数量和价格分别保存到模型		totalNum & totalPrice）
+const vm = new Vue({
+    el: '#app',
+    data: {
+        //购物车商品
+        carts: [
+            {title:'Product1', price: 1, number: 1},
+            {title:'Product2', price: 2, number: 1},
+            {title:'Product3', price: 3, number: 1}
+        ],
+        chooseCarts:[],
+        status:false,
+        totalNum: 0,
+        totalPrice: 0
+    },
+    //声明普通方法
+    methods: {
+        chooseFn() {
+            this.totalFn()
+
+            this.status = this.chooseCarts.length === 3
+        },
+        totalFn(){
+            let totalNum = 0
+            let totalPrice =0
+            this.chooseCarts.forEach(item => {
+                let num = parseInt(item.number)
+                let price = parseFloat(item.price)
+
+                if (isNaN(num)) num = 0
+
+
+
+                totalNum +=num
+                totalPrice +=num*(price*100)
+                // 3 结果保存到模型中               
+            })
+            this.totalNum = totalNum
+            this.totalPrice = totalPrice/100
+        },
+        chooseCartsFn(){
+            //this.chooseCarts=this.status?this.carts:[]
+            this.totalFn()
+            this.status = this.chooseCarts.length === 3
+
+        },
+        addCartNumberFn(i){
+            this.carts[i].number++;
+            this.totalFn()
+
+        },
+        filterCartNumberFn(i){
+             // 1 拿数据
+            let num = this.carts[i].number
+             // 2 过滤
+            // 语法：字符串.replace(旧数据, 新数据)
+            num = String(num).replace(/\D/g,'')
+            this.carts[i].number = num
+            this.totalFn()
+        }
+    }
+})
+</script>
+</body>
+</html>
